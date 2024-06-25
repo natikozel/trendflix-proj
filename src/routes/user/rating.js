@@ -1,6 +1,7 @@
-import DomParser from "dom-parser";
-import qs from "qs";
-import apiRequestRawHtml from "../../helpers/apiRequestRawHtml";
+const DomParser = require("dom-parser");
+const qs = require("qs");
+const { apiRequestRawHtml } = require("../../helpers/apiRequestRawHtml");
+
 
 const SORT_OPTIONS = {
   most_recent: "date_added,desc",
@@ -9,15 +10,15 @@ const SORT_OPTIONS = {
   worst_rated: "your_rating,asc",
 };
 
-export default async function userRating(c) {
+async function userRating(req, res, next) {
   let errorStatus = 500;
 
   try {
-    const userId = c.req.param("id");
+    const userId = req.params.id;
 
     const sort =
-      SORT_OPTIONS[c.req.query("sort") || ""] || Object.values(SORT_OPTIONS)[0];
-    const ratingFilter = c.req.query("ratingFilter") || null;
+      SORT_OPTIONS[req.query.sort || ""] || Object.values(SORT_OPTIONS)[0];
+    const ratingFilter = req.query.ratingFilter || null;
 
     const query = qs.stringify({
       sort,
@@ -100,10 +101,10 @@ export default async function userRating(c) {
       ratings: all_ratings,
     };
 
-    return c.json(result);
+    return res.json(result);
   } catch (error) {
-    c.status(errorStatus);
-    return c.json({
+    res.status(errorStatus);
+    return res.json({
       message: error.message,
     });
   }
@@ -273,3 +274,5 @@ function parseRuntimeIntoSeconds(runtime) {
     return -1;
   }
 }
+
+module.exports = userRating;

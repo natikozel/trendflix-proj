@@ -9,20 +9,27 @@
     "publish": "wrangler deploy src/index.js",
     "test": "jest",
     "start": "wrangler dev src/index.js --port 3000",
-    "bump": "node scripts/bump-version.js"
+    "bump": "node scripts/bump-version.js",
+    "start:local": "node src/index.js"
   },
   "author": "tuhinpal <me@thetuhin.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "jest": "^28.1.0",
     "wrangler": "^3.3.0"
   },
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dom-parser": "^0.1.6",
-    "hono": "^1.4.1",
+    "express": "^4.19.2",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.4.2",
+    "hono": "^3.11.7",
     "html-entities": "^2.3.3",
-    "qs": "^6.11.1"
+    "qs": "^6.11.1",
+    "recast": "^0.23.9"
   },
   "directories": {
     "test": "tests"

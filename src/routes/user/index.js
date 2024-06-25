@@ -1,9 +1,9 @@
-import { Hono } from "hono";
-import userInfo from "./info";
-import userRating from "./rating";
-const userRoutes = new Hono();
+const userInfo = require("./info");
+const userRating = require("./rating");
+const express = require("express");
+const userRoutes = express.Router();
 
 userRoutes.get("/:id", userInfo);
 userRoutes.get("/:id/ratings", userRating);
 
-export default userRoutes;
+module.exports = userRoutes;

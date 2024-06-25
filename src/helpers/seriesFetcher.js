@@ -1,7 +1,7 @@
-import DomParser from "dom-parser";
-import apiRequestRawHtml from "./apiRequestRawHtml";
+const DomParser = require("dom-parser");
+const { apiRequestRawHtml } = require("./apiRequestRawHtml");
 
-export default async function seriesFetcher(id) {
+async function seriesFetcher(id) {
   try {
     const firstSeason = await getSeason({ id, seasonId: 1 });
 
@@ -22,7 +22,7 @@ export default async function seriesFetcher(id) {
   }
 }
 
-export async function getSeason({ id, seasonId }) {
+async function getSeason({ id, seasonId }) {
   const html = await apiRequestRawHtml(
     `https://www.imdb.com/title/${id}/episodes?season=${seasonId}`
   );
@@ -64,4 +64,9 @@ export async function getSeason({ id, seasonId }) {
       api_path: `/title/${id}/season/${s.value}`,
     })),
   };
+}
+
+module.exports = {
+  seriesFetcher,
+  getSeason,
 }

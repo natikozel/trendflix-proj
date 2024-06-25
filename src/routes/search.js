@@ -1,12 +1,13 @@
-import { Hono } from "hono";
-import { apiRequestJson } from "../helpers/apiRequestRawHtml";
+const express = require("express");
+const search = express.Router();
+const { apiRequestJson } = require("../helpers/apiRequestRawHtml");
 
-const search = new Hono();
 
-search.get("/", async (c) => {
+search.get("/", async (req, res, next) => {
   try {
-    let query = c.req.query("query");
-    if (!query) throw new Error("Query param is required");
+    let query = req.query.query;
+    if (!query)
+      throw new Error("Query param is required");
 
     let data = await apiRequestJson(
       `https://v3.sg.media-imdb.com/suggestion/x/${query}.json?includeVideos=0`
@@ -60,15 +61,15 @@ search.get("/", async (c) => {
     response.message = `Found ${titles.length} titles`;
     response.results = titles;
 
-    return c.json(response);
+    return res.json(response);
   } catch (error) {
-    c.status(500);
+    res.status(500);
     let errorMessage = error.message;
     if (error.message.includes("Too many"))
       errorMessage =
         "Too many requests error from IMDB, please try again later";
 
-    return c.json({
+    return res.json({
       query: null,
       results: [],
       message: errorMessage,
@@ -76,4 +77,4 @@ search.get("/", async (c) => {
   }
 });
 
-export default search;
+module.exports = search;

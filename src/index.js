@@ -1,21 +1,26 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import index from "./routes/index";
-import reviews from "./routes/reviews";
-import title from "./routes/title";
-import cache from "./helpers/cache";
-import search from "./routes/search";
-import userRoutes from "./routes/user";
+"use strict"
 
-const app = new Hono();
+const express = require('express')
+const cors = require('cors');
+const index = require("./routes/index");
+const reviews = require("./routes/reviews");
+const title = require("./routes/title");
+const cache = require("./helpers/cache");
+const search = require("./routes/search");
+const userRoutes = require("./routes/user");
+const bodyParser = require("body-parser");
+
+const app = express();
 
 app.use("*", cors());
-app.use("*", cache);
+// app.use(cache);
+app.use(bodyParser.urlencoded({extended: false}));
+app.use("/search", search);
+app.use("/title", title);
+app.use("/reviews", reviews);
+app.use("/user", userRoutes);
+app.use("/", index);
 
-app.route("/search", search);
-app.route("/title", title);
-app.route("/reviews", reviews);
-app.route("/user", userRoutes);
-app.route("/", index);
-
-app.fire();
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+})

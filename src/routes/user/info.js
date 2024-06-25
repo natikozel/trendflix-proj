@@ -1,10 +1,10 @@
-import DomParser from "dom-parser";
+const DomParser = require("dom-parser");
 
-export default async function userInfo(c) {
+async function userInfo(req, res, next) {
   let errorStatus = 500;
 
   try {
-    const userId = c.req.param("id");
+    const userId = req.params.id;
     const response = await fetch(`https://www.imdb.com/user/${userId}`, {
       headers: {
         "User-Agent":
@@ -85,11 +85,13 @@ export default async function userInfo(c) {
       data
     );
 
-    return c.json(result);
+    return res.json(result);
   } catch (error) {
-    c.status(errorStatus);
-    return c.json({
+    res.status(errorStatus);
+    return res.json({
       message: error.message,
     });
   }
 }
+
+module.exports = userInfo;

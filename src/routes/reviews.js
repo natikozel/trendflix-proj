@@ -1,22 +1,23 @@
-import { Hono } from "hono";
-import DomParser from "dom-parser";
-import { decode as entityDecoder } from "html-entities";
-import apiRequestRawHtml from "../helpers/apiRequestRawHtml";
-const reviews = new Hono();
+const DomParser = require("dom-parser");
+const { decode: entityDecoder } = require("html-entities") ;
+const express = require("express");
+const reviews = express.Router();
+const { apiRequestRawHtml } = require("../helpers/apiRequestRawHtml");
 
-reviews.get("/:id", async (c) => {
+
+reviews.get("/:id", async (req, res, next) => {
   try {
-    const id = c.req.param("id");
+    const id = req.params.id;
     let option = optionsMapper[0];
     try {
       let getOption = optionsMapper.find(
-        (option) => option.name === c.req.query("option")
+        (option) => option.name === req.query.option
       );
       if (getOption) option = getOption;
     } catch (_) {}
 
-    let sortOrder = c.req.query("sortOrder") === "asc" ? "asc" : "desc";
-    let nextKey = c.req.query("nextKey");
+    let sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
+    let nextKey = req.query.nextKey;
 
     let reviews = [];
 
@@ -145,16 +146,15 @@ reviews.get("/:id", async (c) => {
       next_api_path: next,
     };
 
-    return c.json(result);
+    return res.json(result);
   } catch (error) {
-    c.status(500);
-    return c.json({
+    res.status(500);
+    return res.json({
       message: error.message,
     });
   }
 });
 
-export default reviews;
 
 const optionsMapper = [
   {
@@ -174,3 +174,6 @@ const optionsMapper = [
     name: "rating",
   },
 ];
+
+
+module.exports = reviews;

@@ -1,6 +1,6 @@
-import config from "../../config";
+const config = require("../../config");
 
-export default async function cache(c, next) {
+async function cache(c, next) {
   const key = c.req.url;
   const cache = await caches.default;
   const response = await cache.match(key);
@@ -34,3 +34,6 @@ export default async function cache(c, next) {
     return c.json(await response.json());
   }
 }
+
+
+module.exports = { cache };

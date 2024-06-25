@@ -1,4 +1,4 @@
-export default async function apiRequestRawHtml(url) {
+async function apiRequestRawHtml(url) {
   let data = await fetch(url, {
     headers: {
       "User-Agent":
@@ -11,7 +11,7 @@ export default async function apiRequestRawHtml(url) {
   return text;
 }
 
-export async function apiRequestJson(url) {
+async function apiRequestJson(url) {
   let data = await fetch(url, {
     headers: {
       "User-Agent":
@@ -23,3 +23,5 @@ export async function apiRequestJson(url) {
   let text = await data.json();
   return text;
 }
+
+module.exports = {apiRequestRawHtml, apiRequestJson}
