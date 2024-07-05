@@ -1,0 +1,1 @@
+{"drama":0.623331,"biography":0.031666,"comedy":0.005,"crime":0.033334,"fantasy":0.095,"mystery":0.059999,"thriller":0.058334,"history":0.001667,"prison":0.003333,"romance":0.015,"family":0.006667,"sum":0.9333309999999999}

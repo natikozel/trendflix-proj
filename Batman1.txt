@@ -1,0 +1,1 @@
+{"superhero":0.201667,"fantasy":0.091667,"thriller":0.134999,"comedy":0.058335,"drama":0.128332,"action":0.271669,"crime":0.038332,"adventure":0.026667,"horror":0.01,"mystery":0.025001,"biography":0.003333,"science fiction":0.005,"sum":0.995002}

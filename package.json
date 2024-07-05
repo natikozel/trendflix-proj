@@ -20,14 +20,18 @@
     "wrangler": "^3.3.0"
   },
   "dependencies": {
+    "@huggingface/inference": "^2.7.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dom-parser": "^0.1.6",
     "express": "^4.19.2",
     "fs-extra": "^11.2.0",
     "glob": "^10.4.2",
+    "groq-sdk": "^0.5.0",
     "hono": "^3.11.7",
     "html-entities": "^2.3.3",
+    "ollama": "^0.5.2",
+    "punycode": "^2.3.1",
     "qs": "^6.11.1",
     "recast": "^0.23.9"
   },
